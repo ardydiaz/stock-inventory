@@ -15,6 +15,36 @@ A RESTful API for managing **products, stock levels, and inventory movements**.
 
 ---
 
+# ⚙️ Installation & Setup
+**Clone the Repository**
+`git clone https://github.com/your-username/your-repo.git`
+**cd your-repo**
+`Install Dependencies`
+**composer install**
+`Setup Environment`
+
+
+* `name` → search product
+
+**Copy .env file:**
+* `cp .env.example .env`
+
+**Generate app key:**
+* `php artisan key:generate`
+
+**Configure Database**
+*`Edit your .env file:`*
+
+* DB_DATABASE=your_database
+* DB_USERNAME=root
+* DB_PASSWORD=
+
+**Run Migrations**
+* php artisan migrate
+
+**Run the Server**
+* php artisan serve
+
 ## 🚀 Base URL
 
 ```
