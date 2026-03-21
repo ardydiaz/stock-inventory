@@ -83,9 +83,9 @@ Authorization: Bearer your_access_token
 ## 📡 HTTP Headers
 
 **All protected endpoints require the following headers:**
-* Authorization: Bearer your_access_token
-* Accept: application/json
-* Content-Type: application/json
+* Authorization: ` Bearer your_access_token`
+* Accept: `application/json`
+* Content-Type: `application/json`
 
 #### Response:
 
