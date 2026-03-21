@@ -68,8 +68,6 @@ http://127.0.0.1:8000/api
 }
 ```
 
-#### Response:
-
 ```json
 {
   "token": "your_access_token"
@@ -81,6 +79,15 @@ http://127.0.0.1:8000/api
 ```
 Authorization: Bearer your_access_token
 ```
+
+## 📡 HTTP Headers
+
+**All protected endpoints require the following headers:**
+* Authorization: Bearer your_access_token
+* Accept: application/json
+* Content-Type: application/json
+
+#### Response:
 
 ---
 
