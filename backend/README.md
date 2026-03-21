@@ -55,6 +55,18 @@ http://127.0.0.1:8000/api
 
 ## 🔐 Authentication (Laravel Sanctum)
 
+### 👤 Register
+
+**POST** `http://127.0.0.1:8000/api/register`
+
+#### Request:
+```json
+{
+  "name": "ardy diaz",
+  "email": "ardy@gmail.com",
+  "password": "123456",
+}
+```
 ### Login
 
 **POST** `http://127.0.0.1:8000/api/login`
