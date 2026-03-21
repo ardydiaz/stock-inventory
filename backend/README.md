@@ -141,18 +141,6 @@ Search filter
   "success": true,
   "data": [
     {
-      "id": 4,
-      "name": "Orange",
-      "sku": "sku-144",
-      "category": "Fruits",
-      "price": "30.00",
-      "current_stock": 450,
-      "status": 1,
-      "created_at": "2026-03-20T16:20:43.000000Z",
-      "updated_at": "2026-03-20T16:20:43.000000Z",
-      "deleted_at": null
-    },
-    {
       "id": 3,
       "name": "Apple",
       "sku": "sku-1",
@@ -162,30 +150,6 @@ Search filter
       "status": 1,
       "created_at": "2026-03-20T01:03:36.000000Z",
       "updated_at": "2026-03-20T15:45:05.000000Z",
-      "deleted_at": null
-    },
-    {
-      "id": 2,
-      "name": "coconut",
-      "sku": "sku-07",
-      "category": "5",
-      "price": "100.00",
-      "current_stock": 24,
-      "status": 1,
-      "created_at": "2026-03-19T14:15:26.000000Z",
-      "updated_at": "2026-03-20T14:50:11.000000Z",
-      "deleted_at": null
-    },
-    {
-      "id": 1,
-      "name": "banana",
-      "sku": "sku-01",
-      "category": "1",
-      "price": "500.00",
-      "current_stock": 40,
-      "status": 1,
-      "created_at": "2026-03-19T14:14:26.000000Z",
-      "updated_at": "2026-03-20T16:22:16.000000Z",
       "deleted_at": null
     }
   ]
