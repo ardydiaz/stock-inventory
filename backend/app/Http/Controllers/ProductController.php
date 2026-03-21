@@ -2,20 +2,49 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\Models\Product;
 
 class ProductController extends Controller
-{   
-    // List all products
-    public function index(){
-        $products = Product::all();
+{  
+    public function index(Request $request){
+        
+        try {
+            $query = Product::query();
+            // 🔍 Search by product name
+            if ($request->filled('name')){ 
+                $query->where('name', 'like', '%' . $request->name . '%');
+            }
 
-        return response()->json([
-            'success' => true,
-            'data' => $products
-        ]);
+            //  Filter by exact price 
+            if ($request->filled('price')) {
+                $query->where('price', $request->price); 
+            }
+            
+            // Filter by price range (better than exact)
+            if ($request->filled('min_price')){ 
+                $query->where('price', '>=', $request->min_price); 
+            }
+
+            if ($request->filled('max_price')) { 
+                $query->where('price', '<=', $request->max_price); 
+            } 
+
+             // Show only soft-deleted products
+            if ($request->get('deleted') === 'only') {
+                $query->onlyTrashed();
+            }
+            $products = $query->latest()->get();
+            return response()->json([ 'success' => true, 'data' => $products ]);
+
+        }  catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve products',
+                'error' => $e->getMessage()
+            ], 400);
+        }
+    
     }
     
     // Create a new product
@@ -23,7 +52,7 @@ class ProductController extends Controller
        try{
             $validated = $request->validate([
                 'name' => 'required',
-                'sku' => 'required|unique:products',
+                'sku' => 'required|string|max:100|unique:products,sku', // SKU must be unique
                 'price' => 'required|numeric',
                 'category' => 'nullable|string',
                 'current_stock' => 'nullable|integer',
@@ -37,6 +66,14 @@ class ProductController extends Controller
                 'data' => $product
             ], 201); // 201 = Created
 
+       }catch (\Illuminate\Validation\ValidationException $e) {
+        // Return JSON with  Validation error SKU already exists
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors' => $e->errors()
+        ], 422);
+       
        }catch(\Exception $e){
            return response()->json([
                'success' => false,
@@ -92,6 +129,45 @@ class ProductController extends Controller
                 'success' => false,
                 'message' => 'Failed to update product',
                 'error' => 'No query results!'
+            ], 400);
+        }
+    }
+
+    //soft delete a product
+    public function destroy($id){
+        try {
+            $product = Product::findOrFail($id);
+            $product->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete product',
+                'error' => $e->getMessage()
+            ], 400);
+        }
+    }
+
+    // restore a soft-deleted product
+    public function restore($id){
+       try {
+            $product = Product::withTrashed()->findOrFail($id);
+
+            $product->restore();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product restored successfully',
+                'data' => $product
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to restore product'
             ], 400);
         }
     }

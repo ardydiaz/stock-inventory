@@ -7,52 +7,381 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+---
+
+# 📦 Stock Inventory API (Laravel 12)
+
+A RESTful API for managing **products, stock levels, and inventory movements**.
+
+---
+
+## 🚀 Base URL
+
+```
+http://127.0.0.1:8000/api
+```
+
+---
+
+## 🔐 Authentication (Laravel Sanctum)
+
+### Login
+
+**POST** `http://127.0.0.1:8000/api/login`
+
+#### Request:
+
+```json
+{
+  "email": "ardy@gmail.com",
+  "password": "123456"
+}
+```
+
+#### Response:
+
+```json
+{
+  "token": "your_access_token"
+}
+```
+
+👉 Use this in headers:
+
+```
+Authorization: Bearer your_access_token
+```
+
+---
+
+# 📦 Products API
+
+## 🔍 Get Products
+
+**GET** `http://127.0.0.1:8000/api/products`
+
+#### Response:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 4,
+      "name": "Orange",
+      "sku": "sku-144",
+      "category": "Fruits",
+      "price": "30.00",
+      "current_stock": 450,
+      "status": 1,
+      "created_at": "2026-03-20T16:20:43.000000Z",
+      "updated_at": "2026-03-20T16:20:43.000000Z",
+      "deleted_at": null
+    }
+  ]
+}
+```
+
+### Query Params:
+```
+Search filter
+```
+**GET** `http://127.0.0.1:8000/api/products?name=Apple`
+#### Response:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 4,
+      "name": "Orange",
+      "sku": "sku-144",
+      "category": "Fruits",
+      "price": "30.00",
+      "current_stock": 450,
+      "status": 1,
+      "created_at": "2026-03-20T16:20:43.000000Z",
+      "updated_at": "2026-03-20T16:20:43.000000Z",
+      "deleted_at": null
+    },
+    {
+      "id": 3,
+      "name": "Apple",
+      "sku": "sku-1",
+      "category": "fruits",
+      "price": "90.00",
+      "current_stock": 25,
+      "status": 1,
+      "created_at": "2026-03-20T01:03:36.000000Z",
+      "updated_at": "2026-03-20T15:45:05.000000Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2,
+      "name": "coconut",
+      "sku": "sku-07",
+      "category": "5",
+      "price": "100.00",
+      "current_stock": 24,
+      "status": 1,
+      "created_at": "2026-03-19T14:15:26.000000Z",
+      "updated_at": "2026-03-20T14:50:11.000000Z",
+      "deleted_at": null
+    },
+    {
+      "id": 1,
+      "name": "banana",
+      "sku": "sku-01",
+      "category": "1",
+      "price": "500.00",
+      "current_stock": 40,
+      "status": 1,
+      "created_at": "2026-03-19T14:14:26.000000Z",
+      "updated_at": "2026-03-20T16:22:16.000000Z",
+      "deleted_at": null
+    }
+  ]
+}
+```
+**GET** `http://127.0.0.1:8000/api/products?price=100`
+#### Response:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 2,
+      "name": "coconut",
+      "sku": "sku-07",
+      "category": "5",
+      "price": "100.00",
+      "current_stock": 24,
+      "status": 1,
+      "created_at": "2026-03-19T14:15:26.000000Z",
+      "updated_at": "2026-03-20T14:50:11.000000Z",
+      "deleted_at": null
+    }
+  ]
+}
+```
+**GET** `http://127.0.0.1:8000/api/products?min_price=50&max_price=150`
+#### Response:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 3,
+      "name": "Apple",
+      "sku": "sku-1",
+      "category": "fruits",
+      "price": "90.00",
+      "current_stock": 25,
+      "status": 1,
+      "created_at": "2026-03-20T01:03:36.000000Z",
+      "updated_at": "2026-03-20T15:45:05.000000Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2,
+      "name": "coconut",
+      "sku": "sku-07",
+      "category": "5",
+      "price": "100.00",
+      "current_stock": 24,
+      "status": 1,
+      "created_at": "2026-03-19T14:15:26.000000Z",
+      "updated_at": "2026-03-20T14:50:11.000000Z",
+      "deleted_at": null
+    }
+  ]
+}
+```
+**GET** `http://127.0.0.1:8000/api/products?name=Apple&min_price=50&max_price=150`
+#### Response:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 3,
+      "name": "Apple",
+      "sku": "sku-1",
+      "category": "fruits",
+      "price": "90.00",
+      "current_stock": 25,
+      "status": 1,
+      "created_at": "2026-03-20T01:03:36.000000Z",
+      "updated_at": "2026-03-20T15:45:05.000000Z",
+      "deleted_at": null
+    }
+  ]
+}
+```
+`
+* `name` → search product
+* `price` → exact price
+* `min_price` / `max_price` → price range
+* `deleted=only` → show soft deleted
+---
+
+## ➕ Create Product
+
+**POST** `http://127.0.0.1:8000/api/add-products`
+
+```json
+{
+  "name": "Product A",
+  "sku": "SKU001",
+  "price": 100,
+  "category": "Food",
+  "current_stock": 10,
+  "status": true
+}
+```
+
+---
+
+## 🔎 Get Single Product
+
+**GET** `http://127.0.0.1:8000/api/products/show/{id}`
+
+---
+
+## ✏️ Update Product
+
+**PUT** `http://127.0.0.1:8000/api/products/update/{id}`
+
+```json
+{
+  "name": "Updated Product",
+  "price": 200
+}
+```
+
+---
+
+## 🗑️ Delete Product
+
+**DELETE** `http://127.0.0.1:8000/api/products/delete/{id}`
+
+---
+
+## ♻️ Restore Product
+
+**PUT** `http://127.0.0.1:8000/api/products/restore/{id}`
+
+---
+
+# 📊 Inventory API
+
+## 📥 Stock In
+
+**POST** `http://127.0.0.1:8000/api/inventory/stock-in`
+
+```json
+{
+  "product_id": 1,
+  "quantity": 10,
+  "reference": "PO-001",
+  "remarks": "Restock"
+}
+```
+
+---
+
+## 📤 Stock Out
+
+**POST** `http://127.0.0.1:8000/api/inventory/stock-out`
+
+```json
+{
+  "product_id": 1,
+  "quantity": 5,
+  "reference": "SO-001",
+  "remarks": "Sold items"
+}
+```
+
+---
+
+## 📜 Movements
+
+**GET** `http://127.0.0.1:8000/api/inventory/movements`
+
+---
+
+# ⚠️ Error Handling
+
+### Validation Error (422)
+
+```json
+{
+  "success": false,
+  "errors": {}
+}
+```
+
+### General Error (400)
+
+```json
+{
+  "success": false,
+  "message": "Error message"
+}
+```
+# 🗑️ Soft Delete Product
+
+**DELETE** `http://127.0.0.1:8000/api/products/delete/{id}`
+
+This does NOT permanently delete the product
+It sets a deleted_at timestamp
+Response:
+{
+  "success": true,
+  "message": "Product deleted successfully"
+}
+
+
+# ♻️ Restore Product
+
+**PUT** `http://127.0.0.1:8000/api//products/restore/{id}`
+
+Restore a soft-deleted product
+Response:
+{
+  "success": true,
+  "message": "Product restored successfully",
+  "data": { }
+}
+---
+
+# 🛠️ Tech Stack
+
+* Laravel 12
+* Laravel Sanctum
+* MySQL
+
+---
+
+# 📌 Notes
+
+* All protected routes require **Bearer Token**
+* Products use **Soft Deletes**
+* Products use **restre Delete produc**
+* Products use **search filter**
+* Products use **inventory movements**
+* Inventory uses **Database Transactions**
+
+---
+
 ## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel is a web application framework with expressive, elegant syntax. It simplifies common tasks such as routing, authentication, sessions, caching, and database operations.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* [Laravel Documentation](https://laravel.com/docs)
+* [Laracasts](https://laracasts.com)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
 ## License
 
