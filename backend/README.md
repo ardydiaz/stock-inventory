@@ -24,8 +24,8 @@ A RESTful API for managing **products, stock levels, and inventory movements**.
    * `composer install`
 
 **Setup Environment**
-* Copy .env file:
-* copy .env.example .env
+* copy .env.example
+* edit to `.env file`:
 
 **Generate app key:**
 * `php artisan key:generate`
@@ -33,6 +33,9 @@ A RESTful API for managing **products, stock levels, and inventory movements**.
 **Configure Database**
 *`Edit your .env file:`*
 
+* DB_CONNECTION=mysql
+* DB_HOST=127.0.0.1
+* DB_PORT=3306
 * DB_DATABASE=your_database
 * DB_USERNAME=root
 * DB_PASSWORD=
