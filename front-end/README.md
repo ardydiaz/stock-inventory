@@ -120,12 +120,14 @@ api.get("/products", {
 * Main container
 * Handles API calls
 * Manages state (products, filters, modals)
+* Show deleted products
 
 ### 📋 ProductTable.jsx
 
 * Displays product list
 * Contains search & filter inputs
 * Triggers edit modal
+
 
 ### 📦 ProductModal.jsx
 
