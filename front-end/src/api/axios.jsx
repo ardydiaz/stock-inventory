@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE = "http://127.0.0.1:8000/api/login";
+const API_BASE = "http://127.0.0.1:8000/api";
 
 
 const api = axios.create({
@@ -21,6 +21,7 @@ api.interceptors.request.use(async (config) => {
         password: "123456",        // your fixed password
       });
       token = res.data.token;
+      console.log("Fetched token:", token);
       localStorage.setItem("token", token);
     } catch (err) {
       console.error("Failed to fetch token", err.response?.data || err);
