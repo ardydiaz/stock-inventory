@@ -132,7 +132,11 @@ api.get("/products", {
 * Used for:
 
   * Add Product
+  * Stock in
+  * Stock out
   * Edit Product
+  * Delete Product
+  * Restore Product
 
 ### 📥📤 StockModal.jsx
 
