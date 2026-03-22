@@ -17,17 +17,15 @@ A RESTful API for managing **products, stock levels, and inventory movements**.
 
 # ⚙️ Installation & Setup
 **Clone the Repository**
-`git clone https://github.com/your-username/your-repo.git`
+* `git clone https://github.com/your-username/your-repo.git`
+
 **cd your-repo**
-`Install Dependencies`
-**composer install**
-`Setup Environment`
+* Install Dependencies
+   * `composer install`
 
-
-* `name` → search product
-
-**Copy .env file:**
-* `cp .env.example .env`
+**Setup Environment**
+* Copy .env file:
+* copy .env.example .env
 
 **Generate app key:**
 * `php artisan key:generate`
