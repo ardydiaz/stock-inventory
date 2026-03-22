@@ -87,12 +87,10 @@ http://127.0.0.1:8000/api
 }
 ```
 
-👉 Use this in headers:
-
-```
+# 👉 Use this in headers:
 Authorization: Bearer your_access_token
-Example: * `Bearer 5|7veRYy7TAJjoLA9dqcFkoBb1DIxuSKAVU8yeIAkie499ca70`
-```
+* Example:  `Bearer 5|7veRYy7TAJjoLA9dqcFkoBb1DIxuSKAVU8yeIAkie499ca70`
+
 
 ## 📡 HTTP Headers
 
