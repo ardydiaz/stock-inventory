@@ -91,6 +91,7 @@ http://127.0.0.1:8000/api
 
 ```
 Authorization: Bearer your_access_token
+Example: * `Bearer 5|7veRYy7TAJjoLA9dqcFkoBb1DIxuSKAVU8yeIAkie499ca70`
 ```
 
 ## 📡 HTTP Headers
